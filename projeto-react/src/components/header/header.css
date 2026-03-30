@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:wght@500;600&display=swap');
+
+:root {
+  --nav-bg: rgba(10, 14, 20, 0.96);
+  --nav-border: rgba(255, 255, 255, 0.07);
+  --nav-text: rgba(255, 255, 255, 0.75);
+  --nav-text-hover: #ffffff;
+  --nav-accent: #4ade80;
+  --nav-accent-dim: rgba(74, 222, 128, 0.15);
+  --nav-height: 64px;
+  --radius: 10px;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Navbar Shell ── */
+.custom-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.custom-navbar-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+}
+
+/* ── Logo / Brand ── */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar-brand-icon {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #4ade80, #16a34a);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.navbar-brand-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.navbar-brand-text span {
+  color: var(--nav-accent);
+}
+
+/* ── Desktop Menu ── */
+.custom-navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-navbar-menu li {
+  position: relative;
+}
+
+.custom-navbar-menu li a,
+.custom-navbar-menu li button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--nav-text);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  letter-spacing: -0.01em;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+
+.custom-navbar-menu li a:hover,
+.custom-navbar-menu li button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--nav-text-hover);
+}
+
+.custom-navbar-menu li a.active {
+  color: var(--nav-accent);
+  background: var(--nav-accent-dim);
+}
+
+/* ── Dropdown ── */
+.dropdown {
+  position: relative;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #141920;
+  border: 1px solid var(--nav-border);
+  border-radius: var(--radius);
+  min-width: 160px;
+  list-style: none;
+  padding: 6px;
+  margin: 0;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+  animation: dropIn 0.15s ease;
+  z-index: 100;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.menu-dropdown li a,
+.menu-dropdown li button {
+  display: block;
+  width: 100%;
+  padding: 9px 14px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--nav-text);
+  border-radius: 7px;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  transition: background var(--transition), color var(--transition);
+}
+
+.menu-dropdown li a:hover,
+.menu-dropdown li button:hover {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+.menu-dropdown li:last-child button {
+  color: #f87171;
+}
+
+.menu-dropdown li:last-child button:hover {
+  background: rgba(248,113,113,0.1);
+  color: #f87171;
+}
+
+/* ── Logout pill (add/highlight) ── */
+.menu-dropdown li:last-child {
+  margin-top: 4px;
+  border-top: 1px solid var(--nav-border);
+  padding-top: 4px;
+}
+
+/* ── Hamburger ── */
+.custom-navbar-toggler {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid var(--nav-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.custom-navbar-toggler:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.custom-navbar-toggler span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--nav-text);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.custom-navbar-toggler.open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.custom-navbar-toggler.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.custom-navbar-toggler.open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── Mobile Menu ── */
+.custom-navbar-menu-mobile {
+  display: none;
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  background: #0a0e14;
+  border-bottom: 1px solid var(--nav-border);
+  list-style: none;
+  padding: 12px 20px 20px;
+  margin: 0;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.custom-navbar-menu-mobile.open {
+  display: flex;
+}
+
+.custom-navbar-menu-mobile li a,
+.custom-navbar-menu-mobile li button {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--nav-text);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  text-align: left;
+  transition: background var(--transition), color var(--transition);
+}
+
+.custom-navbar-menu-mobile li a:hover,
+.custom-navbar-menu-mobile li button:hover {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+.custom-navbar-menu-mobile .logout-button-container button {
+  color: #f87171;
+  border-top: 1px solid var(--nav-border);
+  border-radius: 0;
+  margin-top: 6px;
+  padding-top: 16px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .custom-navbar-menu { display: none; }
+  .custom-navbar-toggler { display: flex; }
+}
+
+/* ── Body offset ── */
+body {
+  padding-top: var(--nav-height);
+}

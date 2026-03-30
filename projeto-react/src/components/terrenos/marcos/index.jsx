@@ -174,28 +174,6 @@ useEffect(() => {
     setSelectedMarcoId(null);
   };
 
-
-
-  const handlePhotoUpload = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-  
-      if (!validImageTypes.includes(file.type)) {
-        toast.error('Formato invalido. PNG, JPG or JPEG file only.');
-        return;
-      }
-  
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-        setFile(file); // Store the file in the state
-        setPreviewImage(URL.createObjectURL(file)); // Add this line
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleSave = async () => {
     if (file) {
       // Prepare the data for Cloudinary
@@ -280,33 +258,7 @@ useEffect(() => {
     }
   }
 
-  const deleteImageMarco = async (index) => {
-    try {
-      // Get the ID of the selected image
-      const selectedImageId = images[index].id;
-
-      // Remove the selected image from the images array
-      const newImages = images.filter(image => image.id !== selectedImageId);
-      
-      setImages(newImages);
-    
-      // Get all the documents
-      const fotosSnapshot = await getDocs(collection(db, "Terrenos", id, "Marcos", selectedMarcoId, "Fotos"));
   
-      // Sort the documents in the same order as the images array
-      const sortedDocs = fotosSnapshot.docs.sort((a, b) => a.id - b.id);
-  
-      // Get the document with the corresponding index
-      const docToDelete = sortedDocs[index];
-  
-      // Delete the document
-      await deleteDoc(doc(db, "Terrenos", id, "Marcos", selectedMarcoId, "Fotos", docToDelete.id));
-      toast.success("Foto eliminada com sucesso"); // Show success toast only when a photo is deleted
-    } catch (error) {
-      console.error('Error deleting image:', error);
-      toast.error("Erro ao eliminar a imagem. Por favor, tente novamente."); // Show error toast to user
-    }
-};
 
 const handleClick = (index) => {
   setSelectedImageIndex(index);
@@ -372,165 +324,6 @@ const handleClick = (index) => {
           ) : (
             
             <div className="markers-grid">
-              {selectedMarco ? (
-                <div key={selectedMarco.id} className="marker-item">
-                  <h3 className="marker-name">Editar {selectedMarco.id}</h3>
-                  <br />
-                  {selectedMarco.coordinates.latitude && selectedMarco.coordinates.longitude && (
-                    <div className="marker-details">
-                      <div className="marker-coordinates">
-                        <strong>Coordenadas:</strong>&nbsp;
-                        {Number(selectedMarco.coordinates.latitude).toFixed(5)},
-                        {Number(selectedMarco.coordinates.longitude).toFixed(5)}
-                        <CopyToClipboard
-                          text={`${selectedMarco.coordinates.latitude} , ${selectedMarco.coordinates.longitude}`}
-                          onCopy={handleCopy}
-                        >
-                          <FiCopy style={{ cursor: "pointer", marginLeft: "10px" }} />
-                        </CopyToClipboard>
-                      </div>
-                      <div className="switch-container">
-                        <label className="marker-description-label">
-                          {tempShowVirtual[selectedMarco.id] ? "Fisico" : "Virtual"}
-                        </label>
-                        <Switch
-                          onChange={() => handleSwitchChange(selectedMarco.id)}
-                          checked={tempShowVirtual[selectedMarco.id] || false}
-                            offColor="#767577"
-                            onColor="#81b0ff"
-                            offHandleColor="#ffffff"
-                            onHandleColor="#ffffff"
-                            handleDiameter={30}
-                            uncheckedIcon={false}
-                            checkedIcon={false}
-                            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                            height={20}
-                            width={48}
-                            className="react-switch"
-                            id="material-switch"
-                          />
-                        </div>
-                      </div>
-                    )}
-                    {isCopied && (
-                      <div className="toast-container">
-                        <ToastContainer
-                          position="top-center"
-                          autoClose={2000}
-                          hideProgressBar
-                          newestOnTop={false}
-                          closeOnClick
-                          rtl={false}
-                          pauseOnFocusLoss
-                          draggable
-                          pauseOnHover
-                        />
-                      </div>
-                    )}
-                    <br />
-                    <div className="marker-description">
-                      <strong>Descrição:</strong>&nbsp;
-                      <input
-                        type="text"
-                        defaultValue={selectedMarco.descricao}
-                        onChange={(event) =>
-                          handleDescriptionChange(selectedMarco.id, event)
-                        }
-                        className="marker-description-input"
-                        style={{ width: "330px" }}
-                      />
-                    </div>
-                    <br />
-                    <div style={{ overflow: 'visible', height: 'auto' }}>
-                   <input type="file" ref={fileInput} onChange={handlePhotoUpload} style={{ display: 'none' }} />
-                   <br></br>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <button className="save-button" onClick={handleButtonClick}>Add Fotos</button>
-                      </div>
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: previewImage ? '300px' : '0', maxHeight: '100vh', overflow: 'hidden' }}>
-                      {previewImage && <img src={previewImage} alt="Preview" style={{ maxWidth: '90%', maxHeight: '90%' }} />}
-                    </div>
-
-                <div className="button-container">
-                  <br /><br /><br />
-                  <button className="save-button" onClick={handleSave}>
-                    Guardar
-                  </button>
-                  <button className="return-button" onClick={handleReturnMenu}>
-                    Voltar
-                  </button>
-                </div>
-                <br/>
-                
-                
-                <div>
-                {selectedImage && (
-                  <div 
-                    style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1000 }}
-                    onClick={() => setSelectedImage(null)}
-                  >
-                    <div onClick={(e) => e.stopPropagation()}>
-                      <img src={selectedImage} alt="Selected" style={{ maxWidth: '90%', maxHeight: '90%' }} />
-                      <button onClick={() => setSelectedImage(null)}></button>
-                    </div>
-                  </div>
-                )}
-
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <h2 className="list-title">Fotos do Marco</h2>
-                  </div>
-                  <br />
-                  <div className="gallery foto-grid">
-                        {images.map((image, index) => (
-                            <div
-                              key={index}
-                              className="image-wrapper"
-                              onClick={() => handleClick(index)}
-                              style={{ position: 'relative' }}
-                            >
-                            <img
-                            src={image}
-                            alt={`Imagem ${index + 1}`}
-                            className="thumbnail-image"
-                            style={{ border: '1px solid black' }} // Adiciona uma borda preta
-                          />
-                          {selectedImageIndex === index && (
-                            <>
-                              <button onClick={(e) => { e.stopPropagation(); openPopup(index); }} style={{ 
-                                position: 'absolute', 
-                                top: 0, 
-                                left: 0, 
-                                fontSize: '2em', 
-                                backgroundColor: 'transparent', 
-                                border: 'none', 
-                                color: 'white' 
-                              }}>👁️</button>
-                              <button onClick={(e) => { e.stopPropagation(); deleteImageMarco(index); }} style={{ 
-                                position: 'absolute', 
-                                top: 0, 
-                                right: 0, 
-                                fontSize: '2em', 
-                                backgroundColor: 'transparent', 
-                                border: 'none', 
-                                color: 'white' 
-                              }}>❌</button>
-                            </>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                </div>
-              </div>
-                
-                  
-                  </div>
-              
-                </div>
-              
-                ) : (
-                // Renderize a lista de marcos
                 <>
                {markers.map((marco, index) => (
                   <div
@@ -612,8 +405,7 @@ const handleClick = (index) => {
                     </div>
                   ))}
                 </>
-              )}
-
+              
             </div>
           )}
           

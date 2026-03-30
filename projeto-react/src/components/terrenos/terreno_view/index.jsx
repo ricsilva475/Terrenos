@@ -199,14 +199,8 @@ const Desenho = () => {
         <Link to={`/terrenos/${id}/desenho/marcos`} className="link-button">
           Marcos
         </Link>
-        <Link
-          to={`/terrenos/${id}/desenho/confrontações`}
-          className="link-button"
-        >
-          Confrontações
-        </Link>
         <Link to={`/terrenos/${id}/fotos`} className="link-button">
-          Multimedia
+          Fotos do Terreno
         </Link>
       </div>
 

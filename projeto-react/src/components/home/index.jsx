@@ -637,7 +637,7 @@ const Home = () => {
               </div>
             </div>
             <div className="stat-pill">
-              <span className="stat-pill-icon">📐</span>
+              <span className="stat-pill-icon">✏️</span>
               <div className="stat-pill-info">
                 <span className="stat-pill-value">{totalArea.toLocaleString("pt-PT")} m²</span>
                 <span className="stat-pill-label">Área Total</span>

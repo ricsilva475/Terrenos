@@ -3,16 +3,7 @@ import { db } from "../../firebase/firebase";
 import { collection, getDocs, deleteDoc, doc, writeBatch } from "firebase/firestore";
 import { useAuth } from "../../contexts/authContext";
 import { useNavigate } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Table,
-  Dropdown,
-  Form
-} from "react-bootstrap";
+import {Container,Row,Col,Card,Button,Form} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./vizinhos.css";
 import { TrashFill, PencilSquare } from "react-bootstrap-icons";
@@ -309,7 +300,7 @@ const Vizinhos = () => {
   return (
     <div className="container">
       <br />
-      <h1 className="header-title">Vizinhos</h1>
+      <h1 className="header-title">Contactos</h1>
       <br />     
       <Form.Group className="mb-3">
         <Form.Control
@@ -332,16 +323,6 @@ const Vizinhos = () => {
         <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
       </svg>
     </Button>
-  </div>
-  <div className="col-md-6">
-    <div className="d-flex flex-wrap justify-content-center justify-content-md-end gap-2">
-      <button className="get-freguesia-btn atualizar-button" onClick={handleImportClick} style={{ marginLeft: '0px' }}>
-        Importar
-      </button>
-      <button className="get-freguesia-btn atualizar-button" onClick={exportVizinhos} style={{ marginRight: '0px' }}>
-        Exportar
-      </button>
-    </div>
   </div>
 </div>
 
@@ -409,63 +390,6 @@ const Vizinhos = () => {
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-0 align-items-center pb-4">
-        <div className="col-sm-6">
-          <div>
-            <p className="mb-sm-0">
-              Mostrando {indexOfFirstEntry + 1} a{" "}
-              {Math.min(indexOfLastEntry, totalContacts)} de {totalContacts}{" "}
-              vizinhos
-            </p>
-          </div>
-        </div>
-        <div className="col-sm-6">
-          <div className="float-sm-end">
-            <ul className="pagination mb-sm-0">
-              <li
-                className={`page-item ${currentPage === 1 && "disabled"}`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => paginate(currentPage - 1)}
-                >
-                  <i className="bi bi-chevron-left"></i>
-                </button>
-              </li>
-              {Array.from({
-                length: Math.ceil(totalContacts / entriesPerPage),
-              }).map((_, index) => (
-                <li
-                  key={index}
-                  className={`page-item ${
-                    currentPage === index + 1 && "active"
-                  }`}
-                >
-                  <button
-                    className="page-link"
-                    onClick={() => paginate(index + 1)}
-                  >
-                    {index + 1}
-                  </button>
-                </li>
-              ))}
-              <li
-                className={`page-item ${
-                  currentPage ===
-                    Math.ceil(totalContacts / entriesPerPage) && "disabled"
-                }`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => paginate(currentPage + 1)}
-                >
-                  <i className="bi bi-chevron-right"></i>
-                </button>
-              </li>
-            </ul>
           </div>
         </div>
       </div>

@@ -10,4 +10,3 @@ Video demo application:
 
 Test App:
 
-https://gtr2024.netlify.app/home

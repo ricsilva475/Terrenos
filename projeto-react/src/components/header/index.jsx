@@ -51,6 +51,11 @@ const Header = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/dashboard" className={isActive("/dashboard") ? "active" : ""}>
+                  Dashboard
+                </Link>
+              </li>
+              <li>
                 <Link to="/vizinhos" className={isActive("/vizinhos") ? "active" : ""}>
                   Contactos
                 </Link>

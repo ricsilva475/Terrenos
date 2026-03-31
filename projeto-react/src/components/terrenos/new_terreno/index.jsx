@@ -276,13 +276,7 @@ const AddTerreno = () => {
                     className="form-input"
                     placeholder="Ex: 100919"
                   />
-                  <button 
-                    type="button"
-                    className="btn-secondary"
-                    onClick={getFreguesia}
-                  >
-                    Obter
-                  </button>
+                  
                 </div>
               </div>
 
@@ -407,10 +401,6 @@ const AddTerreno = () => {
 
           {/* Footer */}
           <div className="form-footer">
-            <p className="required-note">
-              <span className="required-dot"></span>
-              Campos obrigatórios assinalados
-            </p>
             <button 
               type="submit" 
               className="btn-primary"

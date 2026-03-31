@@ -6,3 +6,6 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[build.environment]
+  DISABLE_ESLINT_PLUGIN = "true"
